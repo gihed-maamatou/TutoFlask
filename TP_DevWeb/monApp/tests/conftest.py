@@ -8,3 +8,7 @@ def testapp():
 @pytest.fixture
 def client(testapp):
     return testapp.test_client()
+
+@pytest.fixture
+def runner(testapp):
+    return testapp.test_cli_runner()
