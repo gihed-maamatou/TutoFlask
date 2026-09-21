@@ -28,12 +28,15 @@ class Livre(db.Model):
     Titre = db.Column(db.String(255))
     Url = db.Column(db.String(255))
     Img = db.Column(db.String(255))
+    auteur_id = db.Column (db.Integer , db.ForeignKey ("auteur.idA") )
+    auteur = db.relationship ("Auteur", backref =db.backref ("livres", lazy="dynamic") )
 
-    def __init__(self, Prix, Titre, Url, Img):
+    def __init__(self, Prix, Titre, Url, Img, auteur_id=None):
         self.Prix = Prix
         self.Titre = Titre
         self.Url = Url
         self.Img = Img
+        self.auteur_id = auteur_id
 
     def get_prix(self):
         return self.Prix
