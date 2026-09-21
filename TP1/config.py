@@ -1,5 +1,0 @@
-#>>>import random, string, os
-#>>>"".join([random.choice(string.printable) for _ in os.urandom(24) ] )
-SECRET_KEY = "2lzUl{$*D6#`8uXqlU."
-ABOUT = "A propos de ce projet!"
-CONTACT = "Contactez-moi! Non je rigole, pas envie de recevoir des mails"
