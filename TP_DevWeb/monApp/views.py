@@ -7,12 +7,11 @@ def index():
 
 @app.route('/about/')
 def about():
-    return app.config['ABOUT']
+    return render_template("about.html", title="R3.01 Dev Web avec Flask", name=app.config['ABOUT'])
 
 @app.route('/contact/')
 def contact():
-    return app.config['CONTACT']
-
+    return render_template("contact.html", title="R3.01 Dev Web avec Flask", name=app.config['CONTACT'])
 
 if __name__ == "__main__":
     app.run()
@@ -24,3 +23,4 @@ from flask import render_template
 @app.route('/index/')
 def index_page():
     return render_template("index.html",title ="R3.01 Dev Web avec Flask",name="Cricri")
+
