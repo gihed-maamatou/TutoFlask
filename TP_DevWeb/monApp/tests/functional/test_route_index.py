@@ -8,6 +8,11 @@ def test_index_cricri(client):
     assert response.status_code == 200
     assert b'Bienvenue Cricri' in response.data
 
+def test_index_with_name(client):
+    response = client.get('/index/?name=Alice')
+    assert response.status_code == 200
+    assert b'Bienvenue Alice' in response.data
+
 
 def test_about(client):
     response = client.get('/about/')
