@@ -11,7 +11,7 @@ def test_index_cricri(client):
 def test_index_with_name(client):
     response = client.get('/index/?name=Alice')
     assert response.status_code == 200
-    assert b'Bienvenue Alice' in response.data
+    assert b'Bienvenue Alice !!' in response.data
 
 
 def test_about(client):
@@ -22,4 +22,4 @@ def test_about(client):
 def test_contact(client):
     reponse = client.get('/contact/')
     assert reponse.status_code == 200
-    assert b'vous souhaitez nous contacter : Contactez-moi! Non je rigole, pas envie de recevoir des mails'
+    assert b'vous souhaitez nous contacter : Contactez-moi! Non je rigole, pas envie de recevoir des mails !!'
