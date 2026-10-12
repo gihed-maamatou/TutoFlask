@@ -28,3 +28,17 @@ def index_page():
     else:
         param_name = request.args.get('name')
         return render_template("index.html",title="R3.01 Dev Web avec Flask",name=param_name)
+
+
+from monApp.models import Auteur
+@app.route('/auteurs/')
+def getAuteurs():
+     lesAuteurs = Auteur.query.all()  
+     return render_template('auteurs_list.html', title="R3.01 Dev Web avec Flask", auteurs=lesAuteurs)
+
+
+from monApp.models import Livre
+@app.route('/livres/')
+def getLivres():
+    lesLivres = Livre.query.all()
+    return render_template('livres_list.html', title="R3.01 Dev Web avec Flask", livres = lesLivres)

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <h1>Liste des livres</h1>
+    <p>Nombre de livres : {{ livres|length }}</p>
+    {% if livres|length == 0 %}
+        <p>Aucun auteur trouvé.</p>
+    {% endif %}
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Titre</th>
+                <th>Prix</th>
+                <th>URL</th>
+                <th>Premiere de couverture</th>
+                <th>Auteur</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for unLivre in livres %}
+            <tr> 
+                <td>{{ unLivre.idL }}</td>
+                <td>{{ unLivre.Titre }}</td>
+                <td>{{ unLivre.Prix }}</td> 
+                <td>{{ unLivre.Url }}</td>
+                <td><img
+                        src="{{ url_for('static', filename='images/' ~ unLivre.Img) }}"
+                        alt="Couverture de {{ unLivre.Titre }}"
+                        width="100"
+                    >
+                </td>
+                <td>{{ unLivre.auteur.Nom }}</td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
