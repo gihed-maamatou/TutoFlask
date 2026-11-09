@@ -1,3 +1,3 @@
 from flask import Blueprint
-auteurs_bp = Blueprint('livres', __name__, template_folder='templates')
-from.import routes 
+livres_bp = Blueprint('livres', __name__, template_folder='templates')
+from . import routes

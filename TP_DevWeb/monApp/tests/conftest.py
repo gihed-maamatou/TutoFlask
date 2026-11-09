@@ -1,8 +1,9 @@
 import pytest
-from monApp import app
+from monApp import create_app
 
 @pytest.fixture
 def testapp():
+    app = create_app()
     return app
 
 @pytest.fixture

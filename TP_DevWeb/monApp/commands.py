@@ -1,40 +1,46 @@
 import click, logging as lg
-from .app import app, db
+from flask.cli import with_appcontext
+from .app import db
 
-@app.cli.command()
-@click.argument('filename') 
+
+
+def register_commands(app):
+    app.cli.add_command(loaddb)
+
+
+
+@click.command("loaddb")
+@click.argument("filename")
+@with_appcontext
 def loaddb(filename):
-    '''Creates the tables and populates them with data.'''
-    #  création de toutes les tables
+    """Creates the tables and populates them with data."""
     db.drop_all()
     db.create_all()
 
-    # chargement de notre jeu de données
     import yaml
-    with open(filename, 'r') as file:
-        lesLivres = yaml.safe_load(file) 
+    with open(filename, "r") as file:
+        lesLivres = yaml.safe_load(file)
 
-    # import des modèles
-    from . models import Auteur,Livre
+    from .models import Auteur, Livre
 
     # première passe : création de tous les auteurs
     lesAuteurs = {}
-    for livre in lesLivres :
+    for livre in lesLivres:
         auteur = livre["author"]
         if auteur not in lesAuteurs :
             objet = Auteur(Nom=auteur)
             db.session.add(objet)
             lesAuteurs[auteur] = objet
-    db.session.commit ()
+    db.session.commit()
 
     # deuxième passe : création de tous les livres
-    for livre in lesLivres :
+    for livre in lesLivres:
         auteur = lesAuteurs[livre["author"]]
         objet = Livre(Prix=livre["price"],
-                        Titre=livre["title"],
-                        Url=livre["url"],
-                        Img=livre["img"],
-                        auteur_id = auteur.idA)
+                      Titre=livre["title"],
+                      Url=livre["url"],
+                      Img=livre["img"],
+                      auteur_id=auteur.idA)
         db.session.add(objet)
     db.session.commit()
-    lg.warning('Database initialized!')
+    lg.warning("Database initialized!")
