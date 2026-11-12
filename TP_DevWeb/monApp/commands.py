@@ -1,4 +1,6 @@
-import click, logging as lg
+import click
+import logging as lg
+from hashlib import sha256
 from flask.cli import with_appcontext
 from .app import db
 
@@ -6,6 +8,9 @@ from .app import db
 
 def register_commands(app):
     app.cli.add_command(loaddb)
+    app.cli.add_command(syncdb)
+    app.cli.add_command(newuser)
+    app.cli.add_command(newpasswrd)
 
 
 
@@ -44,3 +49,48 @@ def loaddb(filename):
         db.session.add(objet)
     db.session.commit()
     lg.warning("Database initialized!")
+
+
+def hash_password(password):
+    return sha256(password.encode()).hexdigest()
+
+
+@click.command("syncdb")
+@with_appcontext
+def syncdb():
+    """Creates all missing tables."""
+    db.create_all()
+    lg.warning("Database synchronized!")
+
+
+@click.command("newuser")
+@click.argument("login")
+@click.argument("pwd")
+@with_appcontext
+def newuser(login, pwd):
+    """Adds a new user."""
+    from .models import User
+
+    if db.session.get(User, login) is not None:
+        raise click.ClickException(f"User {login} already exists.")
+
+    db.session.add(User(Login=login, Password=hash_password(pwd)))
+    db.session.commit()
+    lg.warning("User " + login + " created!")
+
+
+@click.command("newpasswrd")
+@click.argument("login")
+@click.argument("pwd")
+@with_appcontext
+def newpasswrd(login, pwd):
+    """Changes a user's password."""
+    from .models import User
+
+    user = db.session.get(User, login)
+    if user is None:
+        raise click.ClickException(f"User {login} does not exist.")
+
+    user.Password = hash_password(pwd)
+    db.session.commit()
+    lg.warning("Password for user " + login + " changed!")

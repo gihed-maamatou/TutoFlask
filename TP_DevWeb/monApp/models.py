@@ -1,4 +1,15 @@
 from .app import db
+from flask_login import UserMixin
+
+
+class User(db.Model, UserMixin):
+    Login = db.Column(db.String(50), primary_key=True)
+    Password = db.Column(db.String(64), nullable=False)
+
+    def get_id(self):
+        return self.Login
+
+
 class Auteur(db.Model):
     idA = db.Column( db.Integer, primary_key=True )
     Nom = db.Column( db.String(100) )
