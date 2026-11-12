@@ -12,6 +12,7 @@
                 <th>ID</th>
                 <th>Nom</th>
                 <th>Nombre de livres</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -20,9 +21,13 @@
                 <td>{{ unAuteur.idA }}</td>
                 <td>{{ unAuteur.Nom }}</td>
                 <td>{{ unAuteur.livres.count() }}</td> 
+                <td>
+                    <a href="{{ url_for('auteurs.viewAuteur', idA=unAuteur.idA) }}" class="btn btn-info">Voir</a>
+                    <a href="{{ url_for('auteurs.updateAuteur', idA=unAuteur.idA) }}" class="btn btn-warning">Modifier</a>
+                    <a href="{{ url_for('auteurs.deleteAuteur', idA=unAuteur.idA) }}" class="btn btn-danger">Supprimer</a>
+                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-    <table class="table table-striped table-bordered table-hover">
 {% endblock %}

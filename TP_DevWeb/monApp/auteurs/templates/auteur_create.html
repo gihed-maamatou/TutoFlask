@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h1>Création d'un auteur</h1>
+
+<form method="POST" action="{{ url_for('auteurs.insertAuteur') }}">
+    {{ createForm.hidden_tag() }}
+    <div class="form-group mb-3{% if createForm.Nom.errors %} has-error{% endif %}">
+        {{ createForm.Nom.label }}
+        {{ createForm.Nom(size=50, class_="form-control") }}
+    </div>
+    {% if createForm.Nom.errors %}
+    <ul class="list-group mb-3">
+        {% for error in createForm.Nom.errors %}
+        <li class="list-group-item list-group-item-danger">{{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <input class="btn btn-success" type="submit" value="Créer">
+    <a href="{{ url_for('auteurs.getAuteurs') }}" class="btn btn-secondary">Retour</a>
+</form>
+{% endblock %}

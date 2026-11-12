@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h1>Modification du livre {{ selectedLivre.Titre }}</h1>
+
+<form method="POST" action="{{ url_for('livres.saveLivre') }}">
+    {{ updateForm.hidden_tag() }}
+    <p>Auteur : {{ selectedLivre.auteur.Nom }}</p>
+    <p>Titre : {{ selectedLivre.Titre }}</p>
+    <div class="form-group mb-3{% if updateForm.Prix.errors %} has-error{% endif %}">
+        {{ updateForm.Prix.label }}
+        {{ updateForm.Prix(class_="form-control") }}
+    </div>
+    {% if updateForm.Prix.errors %}
+    <ul class="list-group mb-3">
+        {% for error in updateForm.Prix.errors %}
+        <li class="list-group-item list-group-item-danger">{{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <input class="btn btn-success" type="submit" value="Enregistrer">
+    <a href="{{ url_for('livres.getLivres') }}" class="btn btn-secondary">Retour</a>
+</form>
+{% endblock %}

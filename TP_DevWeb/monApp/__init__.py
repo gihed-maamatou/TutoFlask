@@ -6,9 +6,9 @@ from monApp.livres import livres_bp
 from monApp.menu import menu_bp
 
 
-def create_app():
+def create_app(config_class="config.ProductionConfig"):
     app = Flask(__name__)
-    app.config.from_object("config")
+    app.config.from_object(config_class)
 
     db.init_app(app)
 

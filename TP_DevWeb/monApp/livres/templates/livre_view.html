@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h1>Consultation du livre {{ selectedLivre.Titre }}</h1>
+
+<dl>
+    <dt>Titre</dt><dd>{{ selectedLivre.Titre }}</dd>
+    <dt>Prix</dt><dd>{{ selectedLivre.Prix }}</dd>
+    <dt>Auteur</dt><dd>{{ selectedLivre.auteur.Nom }}</dd>
+    <dt>URL</dt><dd><a href="{{ selectedLivre.Url }}">{{ selectedLivre.Url }}</a></dd>
+</dl>
+
+<a href="{{ url_for('livres.getLivres') }}" class="btn btn-secondary">Retour</a>
+{% endblock %}
